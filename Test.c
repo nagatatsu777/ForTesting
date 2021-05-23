@@ -6,6 +6,6 @@ typedef struct{
 int main(){
     examp_struct s;
     s.exampid = 9;
-    printf("%d\n", s.exampid);
+    printf("YAY%d\n", s.exampid);
 
 }
