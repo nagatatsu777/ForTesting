@@ -3,6 +3,7 @@
 import java.util.*;
 public class dijkstra{
     static int [] track;
+    static String [] airports = {"Haneda","San Francisco","Hong Kong","Rio de janeiro","Osaka","Nairobi","Washington D.C"};
     public static class Edge{
         private int from;
         private int weight;
@@ -22,7 +23,7 @@ public class dijkstra{
             return this.weight;
         }
         public String toString(){
-            return "Edge, From: "+this.from+" To: "+this.to+" Weight: "+this.weight;
+            return "Edge, From: "+airports[this.from]+" To "+airports[this.to]+" Weight: "+this.weight;
         }
     }
     public static List<Integer> dijkstraPath(Map<Integer, List<Edge>> m,int start){
@@ -32,33 +33,30 @@ public class dijkstra{
         ipq.setUp(30);
         ipq.push(start,0);
         track[start]=0;
-        ipq.toStr();
         while(ipq.getSize()!=0){
             int []arr = ipq.poll();//get key and value with minimum value
             prev = arr[0];
             Iterator<Edge> iterator = m.get(prev).iterator();
             while(iterator.hasNext()){
                 Edge next = iterator.next();
-                if(track[next.getTo()]>track[prev]+next.getWeight()){
-                    track[next.getTo()]=track[prev]+next.getWeight();
+            if(track[next.getTo()]>(track[prev]+next.getWeight())){
+                    track[next.getTo()]=track[prev]+next.getWeight();        
                     ipq.push(next.getTo(),track[next.getTo()]);
-                    ipq.toStr();
                 }}
-                ipq.toStr();
         }
         return lists;
         
     }
      public static void main(String [] args){
         Map<Integer, List<Edge>> graph = new HashMap<>();
-        String [] airports = {"Haneda","San Francisco","Hong Kong","Rio de janeiro","Osaka","Nairobi","Washington D.C"};
         track = new int[airports.length];
+        int start = 0;
         for (int i = 0; i < airports.length; i++) graph.put(i, new LinkedList<Edge>());
         for(int i = 0; i<airports.length;i++)track[i]=Integer.MAX_VALUE;
         graph.get(0).add(new Edge(0,5,1));
-        graph.get(0).add(new Edge(0,3,5));
+        graph.get(0).add(new Edge(0,6,5));
         graph.get(0).add(new Edge(0,4,2));
-        graph.get(0).add(new Edge(0,6,4));
+        graph.get(0).add(new Edge(0,4,4));
         graph.get(1).add(new Edge(1,3,2));
         graph.get(1).add(new Edge(1,4,6));
         graph.get(2).add(new Edge(2,1,3));
@@ -73,9 +71,10 @@ public class dijkstra{
             System.out.println(iterator.next());
             }
         });
-        dijkstraPath(graph,0);
+        dijkstraPath(graph,start);
+        System.out.println("Start Point: "+ airports[start]+"\nShortest Distances: \n");
         for(int i = 0; i<track.length;i++){
-            System.out.println(track[i]);
+            System.out.println(airports[i]+": "+track[i]);
         }
     }
 }
