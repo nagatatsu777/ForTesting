@@ -18,27 +18,26 @@ public class IndexPQueue{
             this.map = map;
         }
         void insert(Integer key, int value ){
-            map.put(key,map.size());
+            if(ipq[2][0]==-1){
+                map.setSize(0);
+            }
+            map.put(key,map.size());    
             ipq[0][map.size()-1]=value;
             ipq[1][map.size()-1]=map.size()-1;
-            if(ipq[2][0]==-1){
-                ipq[2][0]= map.size()-1;
-                ipq[1][map.size()-1]=0;
-            }
-            else{
-                ipq[2][map.size()-1]=map.size()-1;
-                ipq = recurse(map.size()-1,ipq);
-            }
+            ipq[2][size]=map.size()-1;
+            System.out.println(size);
+            ipq = recurse(size,ipq);
             size++;
         }
         void remove(Integer key){
-           int temim =  ipq[2][map.size()-1];
+           size--;
+           int temim =  ipq[2][size];
            int tempm = ipq[1][map.get(key)];
            if(tempm ==  map.size()-1){
             ipq[1][map.get(key)]=-1;
             ipq[2][map.size()-1]=-1;
            }
-           else{
+           else{ 
             ipq[1][temim]=ipq[1][map.get(key)];
             ipq[1][map.get(key)]=-1;
             ipq[2][tempm]=temim;
@@ -47,7 +46,6 @@ public class IndexPQueue{
            }
            ipq[0][map.get(key)]=-1;
            map.remove(key);
-           size--;
 
          }
          void change(Integer key, int value){
@@ -114,7 +112,9 @@ public class IndexPQueue{
             size++;
             return super.put(key,value);
 
-
+        }
+        public void setSize(int s){
+            this.size = s;
         }
     }
     public static int[][] recurse(int node,int [][] oldd){
@@ -193,13 +193,13 @@ public class IndexPQueue{
     }
     public static void  main (String [] args){
         setUp(10);
-        System.out.println(exipq.get(1));
         exipq.insert(0,0);
         exipq.remove(0);
         exipq.insert(1,5);
         exipq.insert(5,3);
         exipq.insert(2,4);
         exipq.insert(4,6);
+        exipq.toStr();
         exipq.remove(5);
         exipq.toStr();
         exipq.insert(6,6);
