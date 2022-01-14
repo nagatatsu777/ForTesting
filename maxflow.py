@@ -57,7 +57,7 @@ def edmond_karp(hashmap,start,end):
             visarr[s]=False
         flow = bfs(start,visarr,hashmap,end)
         maxflow+=flow
-    print("Max Flow: "+ str(maxflow))
+    return maxflow
 e1 = Edge(1,2,3)
 n1 = Edge(2,1,0)
 oppositeedges(e1,n1)
@@ -77,4 +77,5 @@ e6 = Edge(4,5,1)
 n6 = Edge(5,4,0)
 oppositeedges(e6,n6)
 hashmap = {1:[e1,e2,e3],2:[e4,n1],3:[e5,n2],4:[e6,n3],5:[n4,n5,n6]}
-edmond_karp(hashmap,1,5)
+maxflow = edmond_karp(hashmap,1,5)
+print(maxflow)
